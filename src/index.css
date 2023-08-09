@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,80 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.App{
+  position: fixed;
+  width: 100vw;
+  max-height: 100vh;
+}
+
+.header {
+  border-bottom: 1px solid #f0f0f0;
+}
+.nav-logo{
+  background-color: #ffb86c;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+}
+.main-nav{
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.main-nav ul,.nav-tools ul{
+  display: flex;
+  list-style: none;
+  padding: 5px 15px 0 ;
+}
+.main-nav li {
+  padding: 1rem 2rem;
+}
+.main-nav li.active{
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #d9d9d9;
+  border-bottom: none;
+   background: white;
+}
+.nav-tools {
+  padding: 10px 15px;
+}
+.nav-tools ul{
+  padding: 30px 20px;
+  width: fit-content;
+  border: 1px solid #f0f0f0;
+  gap: 30px;
+}
+
+.main-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.section-container{
+  overflow-y: auto;
+  padding: 0 0 20px;
+  border-right:1px solid #d9d9d9 ;
+  border-bottom: 1px solid #d9d9d9;
+  width: 30%;
+}
+.section-heading{
+  padding:10px ;
+  text-align: center;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+}
+.section-text {
+  padding: 10px 15px 0;
+}
+.section-text b {
+  padding: 10px 0;
+}
+.section-text .intro{
+  padding-left: 10px;
+}
+.section-text .intro-list{
+  padding-inline-start: 55px;
 }

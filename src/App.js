@@ -1,11 +1,18 @@
-import './App.css';
+import Info from "./component/info";
+import Nav from "./component/nav";
+import Map from "./component/map";
+
 
 function App() {
   return (
     <div className="App">
-      <h1>
-        LUPAR Report
-      </h1>
+      
+      <Nav />
+      <main className="main-section">
+        <Info />
+        <Map />
+      </main>
+
     </div>
   );
 }
