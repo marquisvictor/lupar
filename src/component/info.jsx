@@ -2,7 +2,12 @@ import React, { useState } from "react";
 
 function Info() {
   const [data, setData] = useState([]);
-  return data.length >= 1 ? <MapInfo data={data} /> : <DefaultInfo />;
+
+  return data.length >= 1 ? (
+    <MapInfo data={data} />
+  ) : (
+    <DefaultInfo setData={setData} />
+  );
 }
 
 function MapInfo() {
