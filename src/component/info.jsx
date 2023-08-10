@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Info() {
-  const [data, setData] = useState([]);
+function Info({data}) {
+  
   return data.length >= 1 ? <MapInfo data={data} /> : <DefaultInfo />;
 }
 
 function MapInfo() {
   return (
-    <div>
+    <div className="section-container">
       <p>This is map</p>
     </div>
   );
