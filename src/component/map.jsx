@@ -39,6 +39,10 @@ function Map() {
         },
         "road-label-simple" // Add layer below labels
       );
+
+      map.on("click", (e) => {
+        console.log(e.lngLat);
+      });
     });
 
     return () => map.remove();
