@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import axios from "axios";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg";
 
-function Map() {
+function Map({ getLocation }) {
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -13,6 +14,7 @@ function Map() {
       container: mapContainer.current,
       zoom: 12.22,
       center: [3.394317, 6.567252],
+      // style: "mapbox://styles/mapbox/streets-v11",
       style: "mapbox://styles/mapbox/dark-v11",
     });
 
@@ -22,26 +24,32 @@ function Map() {
         url: "mapbox://vireks.72lx880c",
       });
 
-      map.addLayer(
-        {
-          id: "vireks.72lx880c",
-          type: "line",
-          source: "tileset_data",
-          "source-layer": "lupar_road-2cal1w",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ff7474",
-            "line-width": 1,
-          },
+      map.addLayer({
+        id: "vireks.72lx880c",
+        type: "line",
+        source: "tileset_data",
+        "source-layer": "lupar_road-2cal1w",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
         },
-        "road-label-simple" // Add layer below labels
-      );
-
+        paint: {
+          "line-color": "#ff7474",
+          "line-width": 1,
+        },
+      });
       map.on("click", (e) => {
-        console.log(e.lngLat);
+        const lat = e.lngLat.lat;
+        const long = e.lngLat.lng;
+        // console.log(long,lat)
+
+        axios
+          .get(
+            `https://api.mapbox.com/v4/vireks.72lx880c/tilequery/${long},${lat}.json?radius=25&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
+          )
+          .then((res) => {
+            getLocation([res.data.features[0]]);
+          });
       });
     });
 
