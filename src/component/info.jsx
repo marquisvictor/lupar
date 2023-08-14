@@ -30,7 +30,7 @@ function MapInfo({ geometry, id, properties, error }) {
       ) : (
         <>
           <div className="section-heading">
-            {properties.LABEL} Road Properties
+            {properties?.LABEL} Road Properties
           </div>
           <div className="section-table">
             <table>
