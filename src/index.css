@@ -106,7 +106,8 @@ main {
   border-bottom: 1px solid #d9d9d9;
 }
 
-.section-text {
+.section-text,
+.section-table {
   height: 100%;
   overflow-y: auto;
   padding: 10px 15px 0;
@@ -142,4 +143,38 @@ main {
 
 .mapboxgl-control-container {
   display: none;
+}
+
+.section-table {
+  padding: 0;
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+td,
+th {
+  border: 1px solid #d9d9d9;
+  padding: 0.2rem 0.4rem;
+}
+
+th[scope="row"] {
+  min-width: 120px;
+  text-align: start;
+  font-weight: 600;
+}
+
+.download-icon {
+  width: 25px;
+  right: 15px;
+  bottom: 30px;
+  cursor: pointer;
+  position: absolute;
+}
+
+.download-icon img {
+  width: 100%;
 }
