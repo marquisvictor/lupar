@@ -23,32 +23,42 @@ function Map({getLocation}) {
         url:'mapbox://vireks.72lx880c'
       })
 
-      map.addLayer({id: "vireks.72lx880c",
-          type: "line",
-          source: "tileset_data",
-          "source-layer": "lupar_road-2cal1w",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ff7474",
-            "line-width": 1,
-          }}
-        )
-        map.on('click', (e) => {
-          const lat = e.lngLat.lat
-          const long = e.lngLat.lng
-          // console.log(long,lat)
+      map.addLayer({
+        id: "vireks.72lx880c",
+        type: "line",
+        source: "tileset_data",
+        "source-layer": "lupar_road-2cal1w",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#ff7474",
+          "line-width": 1,
+        },
+      });
 
-          axios.get(`https://api.mapbox.com/v4/vireks.72lx880c/tilequery/${long},${lat}.json?radius=25&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`).then((res) => {
-            getLocation([res.data.features[0]])
-          })
-        })
-    })
+      map.on("click", (e) => {
+        const lat = e.lngLat.lat;
+        const long = e.lngLat.lng;
+        // console.log(long,lat)
+
+        axios
+          .get(
+            `https://api.mapbox.com/v4/vireks.72lx880c/tilequery/${long},${lat}.json?radius=25&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
+          )
+          .then((res) => {
+            if (res.data.features.length <= 0) {
+              getLocation([{ error: "No result found" }]);
+            } else {
+              getLocation(res.data.features);
+            }
+          });
+      });
+    });
 
     return () => map.remove();
-  }, []);
+  }, [getLocation]);
 
   return (
     <div className="map-container">
