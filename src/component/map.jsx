@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import lupar from "../assets/lupar.geojson";
 import axios from "axios";
 
 mapboxgl.accessToken =
@@ -17,24 +19,44 @@ function Map({getLocation}) {
       style: "mapbox://styles/mapbox/dark-v11",
     });
 
-    map.on('load',() => {
-      map.addSource('tileset_data',{
-        type:'vector',
-        url:'mapbox://vireks.72lx880c'
-      })
+    map.on("load", () => {
+      // map.addSource("tileset_data", {
+      //   type: "vector",
+      //   url: "mapbox://vireks.72lx880c",
+      // });
+
+      // map.addLayer({
+      //   id: "vireks.72lx880c",
+      //   type: "line",
+      //   source: "tileset_data",
+      //   "source-layer": "lupar_road-2cal1w",
+      //   layout: {
+      //     "line-join": "round",
+      //     "line-cap": "round",
+      //   },
+      //   paint: {
+      //     "line-color": "#ff7474",
+      //     "line-width": 1,
+      //   },
+      // });
+
+      map.addSource("earthquakes", {
+        type: "geojson",
+        // Use a URL for the value for the `data` property.
+        data: lupar,
+      });
+
+      console.log(lupar);
 
       map.addLayer({
-        id: "vireks.72lx880c",
-        type: "line",
-        source: "tileset_data",
-        "source-layer": "lupar_road-2cal1w",
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
+        id: "earthquakes-layer",
+        type: "circle",
+        source: "earthquakes",
         paint: {
-          "line-color": "#ff7474",
-          "line-width": 1,
+          "circle-radius": 4,
+          "circle-stroke-width": 2,
+          "circle-color": "red",
+          "circle-stroke-color": "white",
         },
       });
 
