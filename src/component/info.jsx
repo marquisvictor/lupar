@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Info({ data }) {
+function Info({ data, dataType }) {
   const [mainData, setMainData] = useState();
 
   useEffect(() => {
@@ -10,10 +10,14 @@ function Info({ data }) {
     console.log(data);
   }, [data]);
 
-  return data.length >= 1 ? <MapInfo {...mainData} /> : <DefaultInfo />;
+  return data.length >= 1 ? (
+    <MapInfo {...mainData} dataType={dataType} />
+  ) : (
+    <DefaultInfo />
+  );
 }
 
-function MapInfo({ geometry, id, properties, error }) {
+function MapInfo({ geometry, id, properties, error, dataType }) {
   return (
     <div className="section-container">
       {error ? (
@@ -27,7 +31,7 @@ function MapInfo({ geometry, id, properties, error }) {
             </p>
           </div>
         </>
-      ) : (
+      ) : dataType === "road" ? (
         <>
           <div className="section-heading">
             {properties?.LABEL} Road Properties
@@ -87,6 +91,121 @@ function MapInfo({ geometry, id, properties, error }) {
                   <tr>
                     <th scope="row">Maintained by</th>
                     <td>{properties?.road_maint}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <div title="Download PDF" className="download-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Download-Icon.png"
+                alt="download pdf"
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="section-heading">{properties?.address}</div>
+          <div className="section-table">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Property</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {properties?.Height_Flo && (
+                  <tr>
+                    <th scope="row">Height Flo</th>
+                    <td>{properties?.Height_Flo}</td>
+                  </tr>
+                )}
+
+                {properties?.NAME && (
+                  <tr>
+                    <th scope="row">Name</th>
+                    <td>{properties?.NAME}</td>
+                  </tr>
+                )}
+
+                {properties?.OBJECTID && (
+                  <tr>
+                    <th scope="row">Object ID</th>
+                    <td>{properties?.OBJECTID}</td>
+                  </tr>
+                )}
+
+                {properties?.Shape_Area && (
+                  <tr>
+                    <th scope="row">Area Shape</th>
+                    <td>{properties?.Shape_Area}</td>
+                  </tr>
+                )}
+
+                {properties?.Shape_Leng && (
+                  <tr>
+                    <th scope="row">Area Length</th>
+                    <td>{properties?.Shape_Leng}</td>
+                  </tr>
+                )}
+
+                {properties?.address && (
+                  <tr>
+                    <th scope="row">Address</th>
+                    <td>{properties?.address}</td>
+                  </tr>
+                )}
+
+                {properties?.building_h && (
+                  <tr>
+                    <th scope="row">No. of floor</th>
+                    <td>{properties?.building_h}</td>
+                  </tr>
+                )}
+
+                {properties?.status && (
+                  <tr>
+                    <th scope="row">Status</th>
+                    <td>{properties?.status}</td>
+                  </tr>
+                )}
+
+                {properties?.building_n && (
+                  <tr>
+                    <th scope="row">Building Niche</th>
+                    <td>{properties?.building_n}</td>
+                  </tr>
+                )}
+
+                {properties?.building_t && (
+                  <tr>
+                    <th scope="row">Building Type</th>
+                    <td>{properties?.building_t}</td>
+                  </tr>
+                )}
+
+                {properties?.building_u && (
+                  <tr>
+                    <th scope="row">Building Use</th>
+                    <td>{properties?.building_u}</td>
+                  </tr>
+                )}
+
+                {properties?.zone_name && (
+                  <tr>
+                    <th scope="row">Zone name</th>
+                    <td>{properties?.zone_name}</td>
+                  </tr>
+                )}
+
+                {(properties?.roof_mater || properties?.roofing_st) && (
+                  <tr>
+                    <th scope="row">Roof Type</th>
+                    <td>
+                      {properties?.roof_mater} {properties?.roofing_st}
+                    </td>
                   </tr>
                 )}
               </tbody>
