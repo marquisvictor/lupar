@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import axios from "axios";
+import React, { useEffect, useRef } from "react";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg";
 
-function Map({ getLocation }) {
+function Map({ data, getLocation, setDataType }) {
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -39,26 +39,53 @@ function Map({ getLocation }) {
         },
       });
 
+      map.addSource("tileset_building", {
+        type: "vector",
+        url: "mapbox://vireks.4c9ox27n",
+      });
+
+      map.addLayer({
+        id: "vireks.4c9ox27n",
+        type: "fill",
+        source: "tileset_building",
+        "source-layer": "lupar_wgs84-bmk1zc",
+        paint: {
+          "fill-color": "#9ce698",
+        },
+      });
+
       map.on("click", (e) => {
         const lat = e.lngLat.lat;
         const long = e.lngLat.lng;
-        // console.log(long,lat)
 
         axios
           .get(
             `https://api.mapbox.com/v4/vireks.72lx880c/tilequery/${long},${lat}.json?radius=25&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
           )
           .then((res) => {
-            if (res.data.features.length <= 0) {
+            if (res.data.features.length >= 1) {
+              getLocation((prev) => [...res.data.features, ...prev]);
+              setDataType("road");
+            }
+          });
+
+        axios
+          .get(
+            `https://api.mapbox.com/v4/vireks.4c9ox27n/tilequery/${long},${lat}.json?radius=9&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
+          )
+          .then((res) => {
+            if (res.data.features.length <= 0 && data.length <= 0) {
               getLocation([{ error: "No result found" }]);
             } else {
-              getLocation(res.data.features);
+              getLocation((prev) => [...res.data.features, ...prev]);
+              setDataType("building");
             }
           });
       });
     });
 
     return () => map.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getLocation]);
 
   return (
