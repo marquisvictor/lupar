@@ -9,7 +9,6 @@ function Info({ data, dataType }) {
     if (data !== [""]) {
       setMainData(data[0]);
     }
-    console.log(data);
   }, [data]);
 
   return data.length >= 1 ? (
