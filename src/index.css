@@ -170,12 +170,12 @@ th[scope="row"] {
 .download-icon {
   width: 25px;
   height: 25px;
-  left: 250px;
-  bottom: 30px;
-  background-color: #fff;
+  right: 15px;
+  bottom: 15px;
   border-radius: 50%;
+  background-color: #fff;
   cursor: pointer;
-  position: fixed;
+  position: absolute;
 }
 
 .download-icon img {
