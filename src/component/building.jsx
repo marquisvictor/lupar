@@ -26,7 +26,7 @@ function Building({ properties }) {
         imgWidth * ratio,
         imgHeight * ratio
       );
-      pdf.save(`${properties?.Address} Info`);
+      pdf.save(`${properties?.address} Info`);
     });
   };
 
