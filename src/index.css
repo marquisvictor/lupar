@@ -97,18 +97,18 @@ main {
   border-bottom: 1px solid #d9d9d9;
   width: 25%;
   min-width: 300px;
+  height: 432px;
 }
 
 .section-heading {
   padding: 10px;
   text-align: center;
-  border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
+  border: 1px solid #d9d9d9;
 }
 
 .section-text,
 .section-table {
-  height: 100%;
+  height: 411px;
   overflow-y: auto;
   padding: 10px 15px 0;
 }
@@ -169,12 +169,16 @@ th[scope="row"] {
 
 .download-icon {
   width: 25px;
+  height: 25px;
   right: 15px;
-  bottom: 30px;
+  bottom: 15px;
+  border-radius: 50%;
+  background-color: #fff;
   cursor: pointer;
   position: absolute;
 }
 
 .download-icon img {
   width: 100%;
+  height: 100%;
 }
