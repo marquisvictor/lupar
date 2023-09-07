@@ -92,6 +92,7 @@ main {
 }
 
 .section-container {
+  position: relative;
   padding: 0 0 20px;
   border-right: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
