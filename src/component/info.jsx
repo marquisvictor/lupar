@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Building from "./building/";
 
-function Info({ data }) {
+function Info({ data, image }) {
   const [building, setBuilding] = useState({});
   const [area, setArea] = useState([]);
 
@@ -16,13 +16,13 @@ function Info({ data }) {
   }, [data]);
 
   return data.length >= 1 ? (
-    <MapInfo building={building} area={area} />
+    <MapInfo image={image} building={building} area={area} />
   ) : (
     <DefaultInfo />
   );
 }
 
-function MapInfo({ building, area }) {
+function MapInfo({ image, building, area }) {
   return building?.error ? (
     <div className="section-container">
       <div className="section-heading">Welcome to this Platform</div>
@@ -35,7 +35,7 @@ function MapInfo({ building, area }) {
       </div>
     </div>
   ) : (
-    <Building area={area} {...building} />
+    <Building image={image} area={area} {...building} />
   );
 }
 

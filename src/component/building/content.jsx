@@ -1,12 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BuildingTable from "./building properties/building";
 import RoadTable from "./building properties/road";
 import BuildingUse from "./building properties/building-use";
 import BuildingHeight from "./building properties/building-height";
 import BuildingCondition from "./building properties/building-condition";
 
-function Content({ data, coord, areas }) {
+function Content({ image, data, coord, areas }) {
+  const snapShotHolder = useRef(null);
   const [road, setRoad] = useState();
 
   const getRoadDetails = () => {
@@ -69,6 +70,15 @@ function Content({ data, coord, areas }) {
     return percentage;
   };
 
+  useEffect(() => {
+    snapShotHolder.current.innerHTML = "";
+    const img = new Image();
+    img.src = image;
+    img.width = 300;
+    img.height = 250;
+    snapShotHolder.current.appendChild(img);
+  }, [image]);
+
   return (
     <div className="not-rendered">
       <div id="pdfContent" className="pdf-rendered">
@@ -94,7 +104,11 @@ function Content({ data, coord, areas }) {
           <div className="list">
             <p className="list-item">1. Property Details</p>
             <div className="property">
-              <p>(a) {data?.address}</p>
+              <p>
+                (a)
+                <div ref={snapShotHolder}></div>
+              </p>
+              <p>(b) {data?.address}</p>
               <BuildingTable data={data} />
 
               <p>(c) {road?.LABEL ? road?.LABEL : data?.street_nam}</p>
