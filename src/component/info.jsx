@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from "react";
-import Road from "./road";
-import Building from "./building";
+import Building from "./building/";
 
-function Info({ data, dataType }) {
-  const [mainData, setMainData] = useState();
+function Info({ data }) {
+  const [building, setBuilding] = useState({});
+  const [area, setArea] = useState([]);
 
   useEffect(() => {
     if (data !== [""]) {
-      setMainData(data[0]);
+      setBuilding({ ...data[0] });
+
+      const duplicateData = Array.from(data);
+      duplicateData.splice(0, 1);
+      setArea(duplicateData);
     }
   }, [data]);
 
   return data.length >= 1 ? (
-    <MapInfo {...mainData} dataType={dataType} />
+    <MapInfo building={building} area={area} />
   ) : (
     <DefaultInfo />
   );
 }
 
-function MapInfo({ geometry, id, properties, error, dataType }) {
-  return error ? (
+function MapInfo({ building, area }) {
+  return building?.error ? (
     <div className="section-container">
       <div className="section-heading">Welcome to this Platform</div>
       <div className="section-text">
-        <p>{error}</p>
+        <p>{building?.error}</p>
         <p>
           Items appear after you perform a valid search or other task that
           returns results.
         </p>
       </div>
     </div>
-  ) : dataType === "road" ? (
-    <Road properties={properties} />
   ) : (
-    <Building properties={properties} />
+    <Building area={area} {...building} />
   );
 }
 
