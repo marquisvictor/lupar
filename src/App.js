@@ -5,6 +5,7 @@ import Map from "./component/map";
 
 function App() {
   const [data, setData] = useState([]);
+  const [snapShot, getSnapShot] = useState("");
 
   return (
     <div className="app">
@@ -12,8 +13,8 @@ function App() {
 
       <main>
         <div className="main-section">
-          <Info data={data} />
-          <Map data={data} getLocation={setData} />
+          <Info data={data} image={snapShot} />
+          <Map data={data} getSnapshot={getSnapShot} getLocation={setData} />
         </div>
       </main>
     </div>
