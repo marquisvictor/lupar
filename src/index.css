@@ -183,3 +183,84 @@ th[scope="row"] {
   width: 100%;
   height: 100%;
 }
+
+/* PDF CONTENT */
+.not-rendered {
+  position: absolute;
+  top: -10000%;
+}
+
+.pdf-rendered {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+
+.pdf-rendered > div {
+  margin-top: 10px;
+}
+
+.pdf-rendered .head {
+  width: 100%;
+  padding: 10px 0px;
+}
+
+.pdf-rendered .head p {
+  width: 60%;
+  float: left;
+}
+
+.pdf-rendered .head img {
+  float: right;
+  margin-left: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list > .list-item,
+.list > div,
+.land-property > p,
+.land-property > table,
+.property > p,
+.property > table {
+  margin-top: 10px;
+}
+
+.pdf-rendered .list > .list-item {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.pdf-rendered .list .list-item:first-child + .property,
+.pdf-rendered .list .list-item + .land-property {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pdf-rendered .list .list-item:first-child + .property table tr:nth-child(2n) {
+  background: #f7f1f1;
+}
+
+.pdf-rendered .list .list-item + .land-property table tr:nth-child(odd) {
+  background: #f7f1f1;
+}
+
+.pdf-rendered .list .list-item + .land-property table thead tr {
+  background: transparent !important;
+}
+
+.table-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.table-content > p,
+.table-content > table {
+  margin-top: 10px;
+}

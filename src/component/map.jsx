@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from "react";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg";
 
-function Map({ data, getLocation, setDataType }) {
+function Map({ data, getLocation }) {
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -58,27 +58,17 @@ function Map({ data, getLocation, setDataType }) {
         const lat = e.lngLat.lat;
         const long = e.lngLat.lng;
 
-        axios
-          .get(
-            `https://api.mapbox.com/v4/vireks.72lx880c/tilequery/${long},${lat}.json?radius=25&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
-          )
-          .then((res) => {
-            if (res.data.features.length >= 1) {
-              getLocation((prev) => [...res.data.features, ...prev]);
-              setDataType("road");
-            }
-          });
+        console.log(`User clicked Latitude ${lat} and Longitude ${long}`);
 
         axios
           .get(
-            `https://api.mapbox.com/v4/vireks.4c9ox27n/tilequery/${long},${lat}.json?radius=9&limit=5&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
+            `https://api.mapbox.com/v4/vireks.4c9ox27n/tilequery/${long},${lat}.json?radius=50&limit=50&dedupe&access_token=pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg`
           )
           .then((res) => {
             if (res.data.features.length <= 0 && data.length <= 0) {
               getLocation([{ error: "No result found" }]);
             } else {
-              getLocation((prev) => [...res.data.features, ...prev]);
-              setDataType("building");
+              getLocation([...res.data.features]);
             }
           });
       });
