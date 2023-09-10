@@ -2,7 +2,7 @@ import jsPDF from "jspdf";
 import React from "react";
 import Content from "./content";
 
-function Building({ geometry, properties, area }) {
+function Building({ image, geometry, properties, area }) {
   const downloadPdf = () => {
     const tableInput = document.getElementById("pdfContent").innerHTML;
     const pdf = new jsPDF("p", "pt", "a4", true);
@@ -20,7 +20,12 @@ function Building({ geometry, properties, area }) {
 
   return (
     <div className="section-container">
-      <Content areas={area} data={properties} coord={geometry?.coordinates} />
+      <Content
+        image={image}
+        areas={area}
+        data={properties}
+        coord={geometry?.coordinates}
+      />
       <div className="section-heading">{properties?.address}</div>
       <div className="section-table">
         <table>

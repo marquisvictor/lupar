@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from "react";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidmlyZWtzIiwiYSI6ImNsbDAwcG8xNDFxa3AzbW1hMnNyM3gwNXYifQ.fjhylwF_ayrfb2I0ymjNFg";
 
-function Map({ data, getLocation }) {
+function Map({ data, getLocation, getSnapshot }) {
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ function Map({ data, getLocation }) {
       center: [3.394317, 6.567252],
       // style: "mapbox://styles/mapbox/streets-v11",
       style: "mapbox://styles/mapbox/dark-v11",
+      preserveDrawingBuffer: true,
     });
 
     map.on("load", () => {
@@ -71,6 +72,9 @@ function Map({ data, getLocation }) {
               getLocation([...res.data.features]);
             }
           });
+
+        const img = map.getCanvas().toDataURL("image/png", 1.0);
+        getSnapshot(img);
       });
     });
 
