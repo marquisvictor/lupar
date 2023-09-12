@@ -104,10 +104,10 @@ function Content({ image, data, coord, areas }) {
           <div className="list">
             <p className="list-item">1. Property Details</p>
             <div className="property">
-              <p>
+              <div>
                 (a)
                 <div ref={snapShotHolder}></div>
-              </p>
+              </div>
               <p>(b) {data?.address}</p>
               <BuildingTable data={data} />
 

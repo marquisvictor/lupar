@@ -1,5 +1,6 @@
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
+import * as turf from "@turf/turf";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useEffect, useRef } from "react";
 
@@ -58,6 +59,29 @@ function Map({ data, getLocation, getSnapshot }) {
       map.on("click", (e) => {
         const lat = e.lngLat.lat;
         const long = e.lngLat.lng;
+        const center = [long, lat];
+        const radius = 100;
+        const options = {
+          steps: 200,
+          units: "meters", // or "mile"
+        };
+
+        const circle = turf.circle(center, radius, options);
+
+        map.addSource("circleData", {
+          type: "geojson",
+          data: circle,
+        });
+
+        map.addLayer({
+          id: "circle-fill",
+          type: "fill",
+          source: "circleData",
+          paint: {
+            "fill-color": "yellow",
+            "fill-opacity": 0.2,
+          },
+        });
 
         console.log(`User clicked Latitude ${lat} and Longitude ${long}`);
 
