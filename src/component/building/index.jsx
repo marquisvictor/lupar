@@ -14,7 +14,7 @@ function Building({ image, geometry, properties, area }) {
         // save the document as a PDF with name of pdf_name
         pdf.save(`${properties?.address}.pdf`);
       },
-      autoPaging: "text",
+      autoPaging: "slice",
     });
   };
 
