@@ -56,32 +56,43 @@ function Map({ data, getLocation, getSnapshot }) {
         },
       });
 
+      map.addSource("search-radius", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "Polygon",
+            coordinates: [[]],
+          },
+        },
+      });
+
+      map.addLayer({
+        id: "search-radius",
+        type: "fill",
+        source: "search-radius",
+        paint: {
+          "fill-color": "yellow",
+          "fill-opacity": 0.2,
+        },
+      });
+
       map.on("click", (e) => {
         const lat = e.lngLat.lat;
         const long = e.lngLat.lng;
         const center = [long, lat];
-        const radius = 100;
-        const options = {
-          steps: 200,
-          units: "meters", // or "mile"
-        };
 
-        const circle = turf.circle(center, radius, options);
+        function makeRadius(lngLatArray, radiusInMeters) {
+          const point = turf.point(lngLatArray);
+          const buffered = turf.buffer(point, radiusInMeters, {
+            units: "meters",
+          });
+          return buffered;
+        }
 
-        map.addSource("circleData", {
-          type: "geojson",
-          data: circle,
-        });
-
-        map.addLayer({
-          id: "circle-fill",
-          type: "fill",
-          source: "circleData",
-          paint: {
-            "fill-color": "yellow",
-            "fill-opacity": 0.2,
-          },
-        });
+        const searchRadius = makeRadius(center, 100);
+        map.getSource("search-radius").setData(searchRadius);
 
         console.log(`User clicked Latitude ${lat} and Longitude ${long}`);
 
