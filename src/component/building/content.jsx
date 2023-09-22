@@ -57,6 +57,9 @@ function Content({ image, data, coord, areas }) {
       const element = areas[i];
       if (element.properties?.Height_Flo) {
         if (element.properties.Height_Flo.includes(height)) {
+          if (height === 4 && element.properties.Height_Flo.includes(2)) {
+           return;
+          }
           num++;
         }
       }
