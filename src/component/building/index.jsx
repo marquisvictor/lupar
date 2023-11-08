@@ -136,10 +136,7 @@ function Building({ image, geometry, properties, area }) {
           className="download-icon"
           onClick={downloadPdf}
         >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Download-Icon.png"
-            alt="download pdf"
-          />
+           Download Report
         </div>
       </div>
     </div>
